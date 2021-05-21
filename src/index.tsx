@@ -5,11 +5,19 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import CustomThemeProvider from "./themes/CustomThemeProvider";
+import { CssBaseline } from "@material-ui/core";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <CustomThemeProvider>
+          <CssBaseline />
+          <App />
+        </CustomThemeProvider>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
