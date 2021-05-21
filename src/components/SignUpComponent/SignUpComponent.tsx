@@ -1,50 +1,18 @@
 import { makeStyles, Paper, Tab, Tabs, TextField, Button } from '@material-ui/core';
 import React, { SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import SignInComponent from '../SignInComponent/SignInComponent';
-import SignUpComponent from '../SignUpComponent/SignUpComponent';
 
-const AuthComponent = () => {
+const SignUpComponent = (props: any) => {
 	const darkMode = useAppSelector((state) => state.darkMode.status);
-	const [ value, setValue ] = React.useState(0);
-
-	const toggleValue = () => {
-		if (value) {
-			setValue(0);
-		} else {
-			setValue(1);
-		}
-	};
-
-	const handleChange = (event: any, newValue: SetStateAction<number>) => {
-		console.log(newValue);
-		setValue(newValue);
-	};
 	const useStyles = makeStyles({
 		paper: {
-			background: darkMode
-				? 'linear-gradient(45deg, #3bba9c 30%, #707793 90%)'
-				: 'linear-gradient(45deg, #3bba9c 30%, #707793 90%)',
-			opacity: 0.6,
-			color: '#EEEEEE'
-		},
-		paper2: {
-			height: '70vh',
+			height: '60vh',
+			paddingTop: '1vh',
 			//background: '#707793',
 			opacity: 0.9
 		},
-		tab: {
-			color: '#EEEEEE',
-			textTransform: 'none',
-			'&:focus': {
-				color: '#EEEEEE'
-			},
-			'&:hover': {
-				color: '#EEEEEE'
-			}
-		},
 		inputField: {
-			marginTop: '5vh',
+			marginTop: '3vh',
 			color: 'blue',
 			width: '80%',
 			'& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -91,7 +59,7 @@ const AuthComponent = () => {
 			borderRadius: '500px',
 			'&:hover': {
 				background: darkMode
-					? 'linear-gradient(45deg, #393e46 5%, #707793 90%)'
+					? 'linear-gradient(45deg, #3bba9c 30%, #707793 90%)'
 					: 'linear-gradient(45deg, #3bba9c 30%, #707793 90%)',
 				boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.1)',
 				color: '#fff',
@@ -104,23 +72,16 @@ const AuthComponent = () => {
 
 	const classes = useStyles();
 	return (
-		<div>
-			<Paper className={classes.paper} square>
-				<Tabs
-					centered
-					value={value}
-					textColor="primary"
-					onChange={handleChange}
-					aria-label="disabled tabs example"
-					indicatorColor="primary"
-				>
-					<Tab className={classes.tab} label="Sign In" />
-					<Tab className={classes.tab} label="Sign Up" />
-				</Tabs>
-			</Paper>
-			{value ? <SignUpComponent /> : <SignInComponent />}
-		</div>
+		<Paper className={classes.paper} square>
+			<TextField variant="outlined" className={classes.inputField} label="Name" />
+			<TextField variant="outlined" className={classes.inputField} label="Email" />
+			<TextField variant="outlined" type="Password" className={classes.inputField} label="Password" />
+			<TextField variant="outlined" type="Password" className={classes.inputField} label="Confirm Password" />
+			<Button onClick={props.onSubmit} className={classes.loginButton}>
+				Sign Up
+			</Button>
+		</Paper>
 	);
 };
 
-export default AuthComponent;
+export default SignUpComponent;
