@@ -5,6 +5,7 @@ import {
   Typography,
   Switch,
   Box,
+  Link,
 } from "@material-ui/core";
 import React from "react";
 import DarkModeIcon from "@material-ui/icons/Brightness2";
@@ -59,9 +60,9 @@ const NavBar = () => {
             <Typography className={classes.title}>
               <Box fontWeight={200}>Link Hub</Box>
             </Typography>
-            <Typography className={classes.navLink}>
-              <Box fontWeight={200}>Sign In</Box>
-            </Typography>
+            <Link href="/" className={classes.navLink}>
+              <Box fontWeight={200}>Sign Out</Box>
+            </Link>
           </>
         ) : (
           <div className={classes.title}></div>

@@ -5,23 +5,24 @@ import {
   Tab,
   Tabs,
   Typography,
+  useTheme,
 } from "@material-ui/core";
 import React, { SetStateAction } from "react";
 import { useAppSelector } from "../../app/hooks";
 import AuthComponent from "../../components/AuthComponent/AuthComponent";
 const HomePage = () => {
-  const [value, setValue] = React.useState(2);
   const darkMode = useAppSelector((state) => state.darkMode.status);
-  const handleChange = (event: any, newValue: SetStateAction<number>) => {
-    setValue(newValue);
-  };
-
+  const theme = useTheme();
   const useStyles = makeStyles({
     authDiv: {
       width: "30%",
       marginLeft: "35%",
       marginTop: "10vh",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]: {
+        width: "80%",
+        marginLeft: "10%",
+      },
     },
     title: {
       fontSize: "40px",
