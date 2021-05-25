@@ -2,6 +2,7 @@ import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import EditIcon from "@material-ui/icons/Edit";
+import EditLinkModal from "../EditLinkModal/EditLinkModal";
 export interface LinkDisplayProps {
   linkUrl: string;
   linkTitle: string;
@@ -9,6 +10,7 @@ export interface LinkDisplayProps {
 }
 
 const LinkDisplay = (props: LinkDisplayProps) => {
+    const [editLinkModalOpen, setEditLinkModalOpen] = React.useState(false);
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const useStyles = makeStyles({
     linkDisplayDiv: {
@@ -94,7 +96,12 @@ const LinkDisplay = (props: LinkDisplayProps) => {
             <Typography className={classes.linkTitle}>
               {props.linkTitle}
               <> </>
-              <EditIcon className={classes.editButton} />
+             <EditIcon
+                onClick={() => {
+                  setEditLinkModalOpen(true);
+                }}
+                className={classes.editButton}
+              />
             </Typography>
             <Typography className={classes.linkId}>
               Link Id: {props.linkId}
@@ -110,6 +117,13 @@ const LinkDisplay = (props: LinkDisplayProps) => {
           </div>
         </Grid>
       </Grid>
+      <EditLinkModal
+        linkTitle="asdfvsd"
+        linkUrl="asfa"
+        modalOpen={editLinkModalOpen}
+        handleClose={() => {
+          setEditLinkModalOpen(false);
+        }}/>
     </div>
   );
 };

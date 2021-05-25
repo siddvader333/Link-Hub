@@ -3,14 +3,16 @@ import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import EditIcon from "@material-ui/icons/Edit";
 import EditLinkModal from "../EditLinkModal/EditLinkModal";
+import EditCollectionModal from "../EditCollectionModal/EditCollectionModal";
 
 export interface LinkCollectionProps {
   linkTitle: string;
   collectionId: string;
+  onClick: () => void;
 }
 
 const LinkCollection = (props: LinkCollectionProps) => {
-  const [editLinkModalOpen, setEditLinkModalOpen] = React.useState(false);
+    const [editCollectionModalOpen, setEditCollectionModalOpen] = React.useState(false);
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const useStyles = makeStyles({
     linkDisplayDiv: {
@@ -84,7 +86,7 @@ const LinkCollection = (props: LinkCollectionProps) => {
 
   const classes = useStyles();
   return (
-    <div className={classes.linkDisplayDiv}>
+    <div onClick={props.onClick} className={classes.linkDisplayDiv}>
       <Grid container>
         <Grid item xs={12} sm={9}>
           <div className={classes.info}>
@@ -93,7 +95,8 @@ const LinkCollection = (props: LinkCollectionProps) => {
               <> </>
               <EditIcon
                 onClick={() => {
-                  setEditLinkModalOpen(true);
+                  console.log("sup")
+                  setEditCollectionModalOpen(true);
                 }}
                 className={classes.editButton}
               />
@@ -109,14 +112,10 @@ const LinkCollection = (props: LinkCollectionProps) => {
           </div>
         </Grid>
       </Grid>
-      <EditLinkModal
-        linkTitle="asdfvsd"
-        linkUrl="asfa"
-        modalOpen={editLinkModalOpen}
-        handleClose={() => {
-          setEditLinkModalOpen(false);
-        }}
-      />
+      <EditCollectionModal collectionTitle="sdsdfsd" modalOpen={editCollectionModalOpen} handleClose={() => {
+          setEditCollectionModalOpen(false);
+        }}/>
+
     </div>
   );
 };

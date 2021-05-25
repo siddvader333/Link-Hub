@@ -6,6 +6,7 @@ import LinkDisplay from "../../components/LinkDisplayComponent/LinkDisplay";
 
 const Dashboard = () => {
   const [viewCollections, setViewCollections] = React.useState(true);
+
   return (
     <div>
       {viewCollections === true ? (
@@ -14,6 +15,7 @@ const Dashboard = () => {
           <LinkCollection
             collectionId={"124123423"}
             linkTitle={"Social Media Links"}
+            onClick={() =>{setViewCollections(false)}}
           />
         </>
       ) : (

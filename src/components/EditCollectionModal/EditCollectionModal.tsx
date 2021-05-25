@@ -3,14 +3,13 @@ import React from 'react';
 import AuthComponent from '../AuthComponent/AuthComponent';
 import { useAppSelector } from '../../app/hooks';
 
-export interface EditLinkModalProps {
-	linkTitle: string;
-	linkUrl: string;
+export interface EditCollectionModalProps {
+	collectionTitle: string;
 	modalOpen: boolean;
 	handleClose: () => void;
 }
 
-const EditLinkModal = (props: EditLinkModalProps) => {
+const EditCollectionModal = (props: EditCollectionModalProps) => {
 	const darkMode = useAppSelector((state) => state.darkMode.status);
 	const theme = useTheme();
 	const useStyles = makeStyles({
@@ -137,4 +136,4 @@ const EditLinkModal = (props: EditLinkModalProps) => {
 		</div>
 	);
 };
-export default EditLinkModal;
+export default EditCollectionModal;
