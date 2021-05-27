@@ -1,7 +1,6 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
-import EditIcon from "@material-ui/icons/Edit";
 export interface AddItemComponentProps {
   text: string;
 }
@@ -16,7 +15,6 @@ const AddItemComponent = (props: AddItemComponentProps) => {
       color: darkMode ? "#aad8d3" : "#3bba9c",
       margin: "2vh 3% 2vh 3% ",
       padding: "2vh 5% 2vh 5%",
-      width: "55%",
       backgroundColor: darkMode
         ? "rgba(112, 119, 147, 0.6)"
         : "rgba(244, 244, 244, 0.8)",

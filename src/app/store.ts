@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import darkModeReducer from "../slices/darkmode-slice/darkModeSlice";
+import linkCollectionReducer from "../slices/linkCollection-slice/linkCollectionSlice";
 
 export const store = configureStore({
   reducer: {
     darkMode: darkModeReducer,
+    linkCollection: linkCollectionReducer,
   },
 });
 

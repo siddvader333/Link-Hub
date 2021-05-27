@@ -1,13 +1,5 @@
-import {
-  Box,
-  makeStyles,
-  Paper,
-  Tab,
-  Tabs,
-  Typography,
-  useTheme,
-} from "@material-ui/core";
-import React, { SetStateAction } from "react";
+import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
+import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import AuthComponent from "../../components/AuthComponent/AuthComponent";
 const HomePage = () => {
