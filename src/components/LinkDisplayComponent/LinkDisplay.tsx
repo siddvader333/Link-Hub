@@ -4,10 +4,12 @@ import { useAppSelector } from "../../app/hooks";
 import EditIcon from "@material-ui/icons/Edit";
 import EditLinkModal from "../EditLinkModal/EditLinkModal";
 import StyledButton from "../common/StyledButton";
+
 export interface LinkDisplayProps {
-  linkUrl: string;
-  linkTitle: string;
-  linkId: string;
+  linkUrl: string | undefined;
+  linkTitle: string | undefined;
+  linkId: string | undefined;
+  onClick: () => any;
 }
 
 const LinkDisplay = (props: LinkDisplayProps) => {
@@ -93,8 +95,7 @@ const LinkDisplay = (props: LinkDisplayProps) => {
         </Grid>
       </Grid>
       <EditLinkModal
-        linkTitle="asdfvsd"
-        linkUrl="asfa"
+        linkId={props.linkId}
         modalOpen={editLinkModalOpen}
         handleClose={() => {
           setEditLinkModalOpen(false);

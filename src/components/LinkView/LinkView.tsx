@@ -1,20 +1,18 @@
 import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  CollectionItem,
-  getCollections,
-} from "../../slices/collection-slice/collectionSlice";
 import AddItemComponent from "../AddItemComponent/AddItemComponent";
-import LinkCollection from "../LinkCollectionComponent/LinkCollection";
-import AddCollectionModal from "../AddCollectionModal/AddCollectionModal";
-import { getLinksByCollection } from "../../slices/link-slice/linkSlice";
+import {
+  getLinksByCollection,
+  LinkItem,
+} from "../../slices/link-slice/linkSlice";
+import LinkDisplay from "../LinkDisplayComponent/LinkDisplay";
+import AddLinkModal from "../AddLinkModal/AddLinkModal";
 
-const CollectionView = () => {
+const LinkView = () => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
-  const [addCollectionModalOpen, setAddCollectionModalOpen] =
-    React.useState(false);
+  const [addLinkModalOpen, setAddLinkModalOpen] = React.useState(false);
   const theme = useTheme();
   const useStyles = makeStyles({
     displayDiv: {
@@ -37,30 +35,24 @@ const CollectionView = () => {
     },
   });
   const classes = useStyles();
+
   /*Use Effect -- ComponentWillMount */
   useEffect(() => {
     console.log("Print this when component is mounted");
-    dispatch(getCollections());
+    dispatch(getLinksByCollection({ collectionId: "", collectionTitle: "" }));
   }, [dispatch]);
 
   /*Get Collections From API */
-  const collectionsList = useAppSelector(
-    (state) => state.collection.collectionList
-  );
+  const collectionsList = useAppSelector((state) => state.link.linkList);
 
-  const collectionMap = collectionsList.map((item: CollectionItem) => {
+  const linkMap = collectionsList.map((item: LinkItem) => {
     return (
-      <LinkCollection
-        collectionId={item.collectionId}
-        collectionTitle={item.collectionTitle}
+      <LinkDisplay
+        linkId={item.linkId}
+        linkTitle={item.linkTitle}
+        linkUrl={item.linkUrl}
         onClick={() => {
-          console.log("clicked on a collection");
-          dispatch(
-            getLinksByCollection({
-              collectionId: item.collectionId,
-              collectionTitle: item.collectionTitle,
-            })
-          );
+          console.log("clicked on a Link");
         }}
       />
     );
@@ -69,23 +61,23 @@ const CollectionView = () => {
   return (
     <>
       <Typography className={classes.title}>
-        <Box fontWeight={200}>Collections</Box>
+        <Box fontWeight={200}>Links</Box>
       </Typography>
       <AddItemComponent
         onClick={() => {
-          setAddCollectionModalOpen(true);
+          setAddLinkModalOpen(true);
         }}
-        text={"+ Add New Link Collection"}
+        text={"+ Add New Link "}
       />
-      <AddCollectionModal
-        modalOpen={addCollectionModalOpen}
+      <AddLinkModal
+        modalOpen={addLinkModalOpen}
         handleClose={() => {
-          setAddCollectionModalOpen(false);
+          setAddLinkModalOpen(false);
         }}
       />
-      {collectionMap}
+      {linkMap}
     </>
   );
 };
 
-export default CollectionView;
+export default LinkView;

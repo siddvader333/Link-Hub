@@ -7,19 +7,22 @@ import {
   Tab,
 } from "@material-ui/core";
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { editLink } from "../../slices/link-slice/linkSlice";
 import StyledButton from "../common/StyledButton";
 import StyledTextInput from "../common/StyledTextInput";
 
 export interface EditLinkModalProps {
-  linkTitle: string;
-  linkUrl: string;
+  linkId: string | undefined;
   modalOpen: boolean;
   handleClose: () => void;
 }
 
 const EditLinkModal = (props: EditLinkModalProps) => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const [newLinkTitle, setNewLinkTitle] = React.useState("");
+  const [newLinkUrl, setNewLinkUrl] = React.useState("");
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const useStyles = makeStyles({
     modalDiv: {
@@ -76,9 +79,31 @@ const EditLinkModal = (props: EditLinkModalProps) => {
             </Tabs>
           </Paper>
           <Paper className={classes.paper2} square>
-            <StyledTextInput label="New Link Title" />
-            <StyledTextInput label="New Link URL" />
-            <StyledButton text="Confirm" />
+            <StyledTextInput
+              onChange={(event: any) => {
+                setNewLinkTitle(event.target.value);
+              }}
+              label="New Link Title"
+            />
+            <StyledTextInput
+              onChange={(event: any) => {
+                setNewLinkUrl(event.target.value);
+              }}
+              label="New Link URL"
+            />
+            <StyledButton
+              onClick={() => {
+                dispatch(
+                  editLink({
+                    linkId: props.linkId,
+                    linkTitle: newLinkTitle,
+                    linkUrl: newLinkUrl,
+                  })
+                );
+                props.handleClose();
+              }}
+              text="Confirm"
+            />
           </Paper>
         </div>
       </Modal>

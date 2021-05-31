@@ -9,16 +9,12 @@ export interface CollectionItem {
 
 export interface CollectionState {
   collectionList: CollectionItem[];
-  selectedCollectionId: string | undefined;
-  selectedCollectionTitle: string | undefined;
   loading: boolean;
   errorMessage: string | undefined;
 }
 
 const initialState: CollectionState = {
   collectionList: [],
-  selectedCollectionId: undefined,
-  selectedCollectionTitle: undefined,
   loading: false,
   errorMessage: undefined,
 };
@@ -49,12 +45,6 @@ export const collectionSlice = createSlice({
         state.collectionList[index].collectionTitle =
           action.payload.collectionTitle;
       }
-    },
-    selectCollectionSuccess: (state, action) => {
-      state.selectedCollectionId = action.payload.selectedCollectionId;
-      state.selectedCollectionTitle = action.payload.selectedCollectionTitle;
-      state.loading = false;
-      state.errorMessage = "";
     },
     hydrateCollectionList: (state, action) => {
       state.collectionList = action.payload.collectionList;
@@ -140,7 +130,6 @@ export const {
   sendCollectionRequest,
   editCollectionSuccess,
   addCollectionSuccess,
-  selectCollectionSuccess,
   hydrateCollectionList,
   requestCollectionFailure,
 } = collectionSlice.actions;

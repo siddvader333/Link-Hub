@@ -1,13 +1,15 @@
-import { makeStyles, useTheme, Typography, Box } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
-import AddItemComponent from "../../components/AddItemComponent/AddItemComponent";
 import CollectionView from "../../components/CollectionView/CollectionView";
-import LinkDisplay from "../../components/LinkDisplayComponent/LinkDisplay";
+import LinkView from "../../components/LinkView/LinkView";
 
 const Dashboard = () => {
-  const [viewCollections, setViewCollections] = React.useState(true);
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const collectionSelected = useAppSelector(
+    (state) => state.link.selectedCollectionId !== undefined
+  );
+
   const theme = useTheme();
   const useStyles = makeStyles({
     displayDiv: {
@@ -34,36 +36,7 @@ const Dashboard = () => {
   /*Get Links From API */
   return (
     <div className={classes.displayDiv}>
-      {viewCollections === true ? (
-        <CollectionView />
-      ) : (
-        <>
-          <Typography className={classes.title}>
-            <Box fontWeight={200}>Links</Box>
-          </Typography>
-          <AddItemComponent text={"+ Add New Link"} />
-          <LinkDisplay
-            linkUrl="https://www.netflix.ca"
-            linkId="123905782"
-            linkTitle="Netflix"
-          />
-          <LinkDisplay
-            linkUrl="https://www.netflix.ca"
-            linkId="123905782"
-            linkTitle="Netflix"
-          />
-          <LinkDisplay
-            linkUrl="https://www.netflix.ca"
-            linkId="123905782"
-            linkTitle="Netflix"
-          />
-          <LinkDisplay
-            linkUrl="https://www.netflix.ca"
-            linkId="123905782"
-            linkTitle="Netflix"
-          />
-        </>
-      )}
+      {!collectionSelected ? <CollectionView /> : <LinkView />}
     </div>
   );
 };
