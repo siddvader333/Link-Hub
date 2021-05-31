@@ -6,8 +6,8 @@ import EditCollectionModal from "../EditCollectionModal/EditCollectionModal";
 import StyledButton from "../common/StyledButton";
 
 export interface LinkCollectionProps {
-  linkTitle: string;
-  collectionId: string;
+  collectionTitle: string | undefined;
+  collectionId: string | undefined;
   onClick: (e: any) => void;
 }
 
@@ -34,7 +34,7 @@ const LinkCollection = (props: LinkCollectionProps) => {
           : "rgba(255, 255, 255, 0.7)",
       },
     },
-    linkTitle: {
+    collectionTitle: {
       fontSize: "25px",
       color: darkMode ? "#aad8d3" : "#3bba9c",
       marginBottom: "10px",
@@ -65,8 +65,8 @@ const LinkCollection = (props: LinkCollectionProps) => {
       <Grid container>
         <Grid item xs={12} sm={7}>
           <div className={classes.info}>
-            <Typography className={classes.linkTitle}>
-              {props.linkTitle}
+            <Typography className={classes.collectionTitle}>
+              {props.collectionTitle}
               <> </>
               <EditIcon
                 onClick={(e) => {

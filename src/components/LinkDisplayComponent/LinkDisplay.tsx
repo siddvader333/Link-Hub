@@ -68,7 +68,7 @@ const LinkDisplay = (props: LinkDisplayProps) => {
       <Grid container>
         <Grid item xs={12} sm={7}>
           <div className={classes.info}>
-            <Typography className={classes.linkTitle}>
+            <Typography component={'span'} className={classes.linkTitle}>
               {props.linkTitle}
               <> </>
               <EditIcon
@@ -78,10 +78,10 @@ const LinkDisplay = (props: LinkDisplayProps) => {
                 className={classes.editButton}
               />
             </Typography>
-            <Typography className={classes.linkId}>
+            <Typography component={'span'}className={classes.linkId}>
               Link Id: {props.linkId}
             </Typography>
-            <Typography className={classes.linkUrl}>
+            <Typography component={'span'}className={classes.linkUrl}>
               Link URL: {props.linkUrl}
             </Typography>
           </div>

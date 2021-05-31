@@ -51,13 +51,12 @@ const NavBar = () => {
   const classes = useStyles();
   const location = useLocation();
   const condensedNav = location.pathname === "/";
-  console.log(condensedNav);
   return (
     <AppBar className={classes.navbar} position="sticky">
       <Toolbar>
         {!condensedNav ? (
           <>
-            <Typography className={classes.title}>
+            <Typography component={'span'} className={classes.title}>
               <Box fontWeight={200}>Link Hub</Box>
             </Typography>
             <Link href="/" className={classes.navLink}>

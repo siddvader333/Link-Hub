@@ -1,11 +1,15 @@
 import { makeStyles, useTheme, Typography, Box } from "@material-ui/core";
-import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import React, { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import AddItemComponent from "../../components/AddItemComponent/AddItemComponent";
 import LinkCollection from "../../components/LinkCollectionComponent/LinkCollection";
 import LinkDisplay from "../../components/LinkDisplayComponent/LinkDisplay";
+import { CollectionItem } from "../../slices/collection-slice/collectionSlice";
+import { getCollections } from '../../slices/collection-slice/collectionSlice';
+import StyledButton from "../../components/common/StyledButton";
 
 const Dashboard = () => {
+  const dispatch = useAppDispatch();
   const [viewCollections, setViewCollections] = React.useState(true);
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const theme = useTheme();
@@ -30,51 +34,39 @@ const Dashboard = () => {
     },
   });
   const classes = useStyles();
+
+  /*Use Effect -- ComponentWillMount */
+  useEffect(() =>{
+    console.log("Print this when component is mounted");
+    //dispatch(getCollections())
+  
+  }, [])
+  /*Get Collections From API */
+  const collectionsList = useAppSelector((state) => state.collection.collectionList);
+  const collectionMap = viewCollections ? collectionsList.map((item: CollectionItem) => {
+    return <LinkCollection
+      collectionId={item.collectionId}
+      collectionTitle={item.collectionTitle}
+      onClick={() =>{setViewCollections(false)}}/>
+  }) : undefined;
+
+  console.log(collectionsList);
+  console.log(collectionMap);
+  /*Get Links From API */
   return (
     <div className={classes.displayDiv}>
       {viewCollections === true ? (
         <>
-          <Typography className={classes.title}>
+          <Typography component={'span'} className={classes.title}>
             <Box fontWeight={200}>Collections</Box>
           </Typography>
           <AddItemComponent text={"+ Add New Link Collection"} />
-          <LinkCollection
-            collectionId={"124123423"}
-            linkTitle={"Social Media Links"}
-            onClick={() => {
-              console.log("hello");
-              setViewCollections(false);
-            }}
-          />
-          <LinkCollection
-            collectionId={"124123423"}
-            linkTitle={"Social Media Links"}
-            onClick={(e) => {
-              console.log(e.target);
-              console.log("hello");
-              setViewCollections(false);
-            }}
-          />
-          <LinkCollection
-            collectionId={"124123423"}
-            linkTitle={"Social Media Links"}
-            onClick={() => {
-              console.log("hello");
-              setViewCollections(false);
-            }}
-          />
-          <LinkCollection
-            collectionId={"124123423"}
-            linkTitle={"Social Media Links"}
-            onClick={() => {
-              console.log("hello");
-              setViewCollections(false);
-            }}
-          />
+          <StyledButton text="sup" onClick={() => {dispatch(getCollections())}}/>
+          {collectionMap}
         </>
       ) : (
         <>
-          <Typography className={classes.title}>
+          <Typography component={'span'} className={classes.title}>
             <Box fontWeight={200}>Links</Box>
           </Typography>
           <AddItemComponent text={"+ Add New Link"} />
