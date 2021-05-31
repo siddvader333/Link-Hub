@@ -8,17 +8,16 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { editCollections } from "../../slices/collection-slice/collectionSlice";
+import { addCollection } from "../../slices/collection-slice/collectionSlice";
 import StyledButton from "../common/StyledButton";
 import StyledTextInput from "../common/StyledTextInput";
 
-export interface EditCollectionModalProps {
-  collectionId: string | undefined;
+export interface AddCollectionModalProps {
   modalOpen: boolean;
   handleClose: () => void;
 }
 
-const EditCollectionModal = (props: EditCollectionModalProps) => {
+const AddCollectionModal = (props: AddCollectionModalProps) => {
   const [newCollectionTitle, setNewCollectionTitle] = React.useState("");
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const theme = useTheme();
@@ -74,7 +73,7 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
               aria-label="disabled tabs example"
               indicatorColor="primary"
             >
-              <Tab className={classes.tab} label="Edit Collection" />
+              <Tab className={classes.tab} label="Add Collection" />
             </Tabs>
           </Paper>
           <Paper className={classes.paper2} square>
@@ -87,8 +86,7 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
             <StyledButton
               onClick={() => {
                 dispatch(
-                  editCollections({
-                    collectionId: props.collectionId,
+                  addCollection({
                     collectionTitle: newCollectionTitle,
                   })
                 );
@@ -102,4 +100,4 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
     </div>
   );
 };
-export default EditCollectionModal;
+export default AddCollectionModal;

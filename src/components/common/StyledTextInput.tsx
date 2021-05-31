@@ -5,6 +5,7 @@ export interface StyledTextInputProps {
   label: string;
   type?: string;
   variant?: string;
+  onChange?: any;
 }
 
 const StyledTextInput = (props: StyledTextInputProps) => {
@@ -50,6 +51,7 @@ const StyledTextInput = (props: StyledTextInputProps) => {
       type={props.type}
       label={props.label}
       className={classes.inputField}
+      onChange={props.onChange}
     />
   );
 };

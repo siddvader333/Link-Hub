@@ -56,7 +56,7 @@ const NavBar = () => {
       <Toolbar>
         {!condensedNav ? (
           <>
-            <Typography component={'span'} className={classes.title}>
+            <Typography className={classes.title}>
               <Box fontWeight={200}>Link Hub</Box>
             </Typography>
             <Link href="/" className={classes.navLink}>

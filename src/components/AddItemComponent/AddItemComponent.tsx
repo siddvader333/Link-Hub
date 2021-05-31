@@ -3,6 +3,7 @@ import React from "react";
 import { useAppSelector } from "../../app/hooks";
 export interface AddItemComponentProps {
   text: string;
+  onClick?: () => any;
 }
 
 const AddItemComponent = (props: AddItemComponentProps) => {
@@ -30,7 +31,11 @@ const AddItemComponent = (props: AddItemComponentProps) => {
   });
 
   const classes = useStyles();
-  return <div className={classes.linkDisplayDiv}>{props.text}</div>;
+  return (
+    <div onClick={props.onClick} className={classes.linkDisplayDiv}>
+      {props.text}
+    </div>
+  );
 };
 
 export default AddItemComponent;

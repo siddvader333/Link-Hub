@@ -7,22 +7,20 @@ import {
   Tab,
 } from "@material-ui/core";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { editCollections } from "../../slices/collection-slice/collectionSlice";
+import { useAppSelector } from "../../app/hooks";
 import StyledButton from "../common/StyledButton";
 import StyledTextInput from "../common/StyledTextInput";
 
-export interface EditCollectionModalProps {
-  collectionId: string | undefined;
+export interface AddLinkModalProps {
+  linkTitle: string;
+  linkUrl: string;
   modalOpen: boolean;
   handleClose: () => void;
 }
 
-const EditCollectionModal = (props: EditCollectionModalProps) => {
-  const [newCollectionTitle, setNewCollectionTitle] = React.useState("");
+const AddLinkModal = (props: AddLinkModalProps) => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const theme = useTheme();
-  const dispatch = useAppDispatch();
   const useStyles = makeStyles({
     modalDiv: {
       outline: "none",
@@ -43,7 +41,7 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
       color: "#EEEEEE",
     },
     paper2: {
-      height: "25vh",
+      height: "40vh",
       paddingTop: "1vh",
       opacity: 1.0,
     },
@@ -74,32 +72,17 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
               aria-label="disabled tabs example"
               indicatorColor="primary"
             >
-              <Tab className={classes.tab} label="Edit Collection" />
+              <Tab className={classes.tab} label="Add Link" />
             </Tabs>
           </Paper>
           <Paper className={classes.paper2} square>
-            <StyledTextInput
-              onChange={(event: any) => {
-                setNewCollectionTitle(event.target.value);
-              }}
-              label="New Collection Title"
-            />
-            <StyledButton
-              onClick={() => {
-                dispatch(
-                  editCollections({
-                    collectionId: props.collectionId,
-                    collectionTitle: newCollectionTitle,
-                  })
-                );
-                props.handleClose();
-              }}
-              text="Confirm"
-            />
+            <StyledTextInput label="New Link Title" />
+            <StyledTextInput label="New Link URL" />
+            <StyledButton text="Confirm" />
           </Paper>
         </div>
       </Modal>
     </div>
   );
 };
-export default EditCollectionModal;
+export default AddLinkModal;

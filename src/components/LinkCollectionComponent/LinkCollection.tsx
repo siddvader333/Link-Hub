@@ -61,7 +61,10 @@ const LinkCollection = (props: LinkCollectionProps) => {
 
   const classes = useStyles();
   return (
-    <div onClick={props.onClick} className={classes.linkDisplayDiv}>
+    <div
+      onClick={editCollectionModalOpen ? undefined : props.onClick}
+      className={classes.linkDisplayDiv}
+    >
       <Grid container>
         <Grid item xs={12} sm={7}>
           <div className={classes.info}>
@@ -69,10 +72,9 @@ const LinkCollection = (props: LinkCollectionProps) => {
               {props.collectionTitle}
               <> </>
               <EditIcon
-                onClick={(e) => {
-                  console.log("sup");
+                onClick={(event) => {
                   setEditCollectionModalOpen(true);
-                  e.stopPropagation();
+                  event.stopPropagation();
                 }}
                 className={classes.editButton}
               />
@@ -89,9 +91,10 @@ const LinkCollection = (props: LinkCollectionProps) => {
         </Grid>
       </Grid>
       <EditCollectionModal
-        collectionTitle="sdsdfsd"
+        collectionId={props.collectionId}
         modalOpen={editCollectionModalOpen}
         handleClose={() => {
+          console.log("close modal here");
           setEditCollectionModalOpen(false);
         }}
       />
