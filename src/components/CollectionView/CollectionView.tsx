@@ -1,14 +1,11 @@
 import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  CollectionItem,
-  getCollections,
-} from "../../slices/collection-slice/collectionSlice";
+import { CollectionItem } from "../../slices/collection-slice/collectionSlice";
 import AddItemComponent from "../AddItemComponent/AddItemComponent";
 import LinkCollection from "../LinkCollectionComponent/LinkCollection";
 import AddCollectionModal from "../AddCollectionModal/AddCollectionModal";
-import { getLinksByCollection } from "../../slices/link-slice/linkSlice";
+import getCollections from "../../slices/collection-slice/thunks/getCollections";
 
 const CollectionView = () => {
   const dispatch = useAppDispatch();
@@ -53,15 +50,6 @@ const CollectionView = () => {
       <LinkCollection
         collectionId={item.collectionId}
         collectionTitle={item.collectionTitle}
-        onClick={() => {
-          console.log("clicked on a collection");
-          dispatch(
-            getLinksByCollection({
-              collectionId: item.collectionId,
-              collectionTitle: item.collectionTitle,
-            })
-          );
-        }}
       />
     );
   });

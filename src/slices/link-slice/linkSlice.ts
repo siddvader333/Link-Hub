@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
-import { mockGetLinkList } from "../../mocks/apiMocks";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface LinkItem {
   linkTitle: string | undefined;
@@ -16,7 +14,7 @@ export interface LinkState {
   errorMessage: string | undefined;
 }
 
-const initialState: LinkState = {
+export const initialState: LinkState = {
   linkList: [],
   selectedCollectionId: undefined,
   selectedCollectionTitle: undefined,
@@ -38,7 +36,7 @@ export const linkSlice = createSlice({
         linkId: action.payload.linkId,
       });
       state.loading = false;
-      state.errorMessage = "";
+      state.errorMessage = undefined;
     },
     editLinkSuccess: (state, action) => {
       const index = state.linkList
@@ -50,13 +48,14 @@ export const linkSlice = createSlice({
         state.linkList[index].linkTitle = action.payload.linkTitle;
         state.linkList[index].linkUrl = action.payload.linkUrl;
       }
+      state.loading = false;
     },
     getLinksByCollectionSuccess: (state, action) => {
       state.linkList = action.payload.linkList;
       state.selectedCollectionId = action.payload.selectedCollectionId;
       state.selectedCollectionTitle = action.payload.selectedCollectionTitle;
       state.loading = false;
-      state.errorMessage = "";
+      state.errorMessage = undefined;
     },
     requestLinkFailure: (state, action) => {
       state.loading = false;
@@ -64,85 +63,6 @@ export const linkSlice = createSlice({
     },
   },
 });
-
-export const addLink = createAsyncThunk(
-  "/link/addLink",
-  async (args: { linkTitle: string; linkUrl: string }, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
-    const { linkTitle, linkUrl } = args;
-    const newLinkId = uuidv4();
-    try {
-      //Make API call to add new link to current collection
-    } catch (error) {
-      console.log("Add Link Error");
-      dispatch(requestLinkFailure("Unable to Add a new link."));
-      return;
-    } finally {
-      dispatch(
-        addLinkSuccess({
-          linkId: newLinkId,
-          linkTitle: linkTitle,
-          linkUrl: linkUrl,
-        })
-      );
-    }
-  }
-);
-
-export const editLink = createAsyncThunk(
-  "/link/editLink",
-  (args: LinkItem, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
-    const { linkId, linkTitle, linkUrl } = args;
-    try {
-      //Make API Call to edit link with given and update title /url
-    } catch (error) {
-      console.log("Edit Link Error");
-      dispatch(requestLinkFailure("Unable to Edit Link."));
-      return;
-    } finally {
-      dispatch(
-        editLinkSuccess({
-          linkId: linkId,
-          linkTitle: linkTitle,
-          linkUrl: linkUrl,
-        })
-      );
-    }
-  }
-);
-
-export const getLinksByCollection = createAsyncThunk(
-  "/link/getLinksByCollection",
-  async (
-    args: {
-      collectionId: string | undefined;
-      collectionTitle: string | undefined;
-    },
-    thunkAPI
-  ) => {
-    const dispatch = thunkAPI.dispatch;
-    const { collectionId, collectionTitle } = args;
-    dispatch(sendLinkRequest());
-    let linkList;
-    try {
-      //Make API call to fetch all links for a given collection Id
-      linkList = mockGetLinkList();
-    } catch (error) {
-      console.log("Get Links By Collection Id Error");
-      dispatch(requestLinkFailure("Unable to get links by collection Id"));
-      return;
-    } finally {
-      dispatch(
-        getLinksByCollectionSuccess({
-          selectedCollectionId: collectionId,
-          selectedCollectionTitle: collectionTitle,
-          linkList: linkList,
-        })
-      );
-    }
-  }
-);
 
 export const {
   sendLinkRequest,

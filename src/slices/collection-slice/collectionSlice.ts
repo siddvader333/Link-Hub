@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { mockGetCollections } from "../../mocks/apiMocks";
-import { v4 as uuidv4 } from "uuid";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface CollectionItem {
   collectionTitle: string | undefined;
@@ -13,7 +11,7 @@ export interface CollectionState {
   errorMessage: string | undefined;
 }
 
-const initialState: CollectionState = {
+export const initialState: CollectionState = {
   collectionList: [],
   loading: false,
   errorMessage: undefined,
@@ -32,7 +30,7 @@ export const collectionSlice = createSlice({
         collectionId: action.payload.collectionId,
       });
       state.loading = false;
-      state.errorMessage = "";
+      state.errorMessage = undefined;
     },
     editCollectionSuccess: (state, action) => {
       const index = state.collectionList
@@ -40,11 +38,11 @@ export const collectionSlice = createSlice({
           return currentCollection.collectionId;
         })
         .indexOf(action.payload.collectionId);
-      console.log(index);
       if (index !== -1) {
         state.collectionList[index].collectionTitle =
           action.payload.collectionTitle;
       }
+      state.loading = false;
     },
     hydrateCollectionList: (state, action) => {
       state.collectionList = action.payload.collectionList;
@@ -55,76 +53,6 @@ export const collectionSlice = createSlice({
     },
   },
 });
-
-/*Async Thunks here */
-export const getCollections = createAsyncThunk(
-  "/collection/getCollections",
-  async (_, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
-    let collectionList;
-    dispatch(sendCollectionRequest());
-    try {
-      //Make API Call to get link Collection from collectionId
-      collectionList = mockGetCollections();
-    } catch (error) {
-      console.log("Get Collection Error");
-      dispatch(requestCollectionFailure("Unable to get Collections"));
-      return;
-    }
-    /*Request Succeeded -- add collections to state */
-    dispatch(
-      hydrateCollectionList({
-        collectionList: collectionList,
-      })
-    );
-  }
-);
-
-export const editCollections = createAsyncThunk(
-  "/collection/editCollection",
-  async (args: CollectionItem, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
-    dispatch(sendCollectionRequest());
-    const { collectionId, collectionTitle } = args;
-    try {
-      //Make API Call to edit collection in database
-    } catch (error) {
-      console.log("Edit Collection Error");
-      dispatch(requestCollectionFailure("Unable to Edit Collections."));
-      return;
-    }
-    //Request Succeeded --> edit local store
-    dispatch(
-      editCollectionSuccess({
-        collectionId: collectionId,
-        collectionTitle: collectionTitle,
-      })
-    );
-  }
-);
-
-export const addCollection = createAsyncThunk(
-  "/collection/addCollection",
-  (args: { collectionTitle: string }, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
-    const { collectionTitle } = args;
-    const newCollectionId = uuidv4();
-    try {
-      //Make API Call to Create new Collection and add to database
-    } catch (error) {
-      console.log("Add Collection Error");
-      dispatch(requestCollectionFailure("Unable to add new collection."));
-      return;
-    }
-
-    dispatch(
-      addCollectionSuccess({
-        collectionTitle: collectionTitle,
-        collectionId: newCollectionId,
-      })
-    );
-  }
-);
 
 export const {
   sendCollectionRequest,

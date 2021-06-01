@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addLink } from "../../slices/link-slice/linkSlice";
+import addLink from "../../slices/link-slice/thunks/addLink";
 import StyledButton from "../common/StyledButton";
 import StyledTextInput from "../common/StyledTextInput";
 

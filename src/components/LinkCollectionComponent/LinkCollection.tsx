@@ -1,19 +1,20 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import EditIcon from "@material-ui/icons/Edit";
 import EditCollectionModal from "../EditCollectionModal/EditCollectionModal";
 import StyledButton from "../common/StyledButton";
+import getLinksByCollection from "../../slices/link-slice/thunks/getLinksByCollection";
 
 export interface LinkCollectionProps {
   collectionTitle: string | undefined;
   collectionId: string | undefined;
-  onClick: (e: any) => void;
 }
 
 const LinkCollection = (props: LinkCollectionProps) => {
   const [editCollectionModalOpen, setEditCollectionModalOpen] =
     React.useState(false);
+  const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const useStyles = makeStyles({
     linkDisplayDiv: {
@@ -62,7 +63,18 @@ const LinkCollection = (props: LinkCollectionProps) => {
   const classes = useStyles();
   return (
     <div
-      onClick={editCollectionModalOpen ? undefined : props.onClick}
+      onClick={
+        editCollectionModalOpen
+          ? undefined
+          : () => {
+              dispatch(
+                getLinksByCollection({
+                  collectionId: props.collectionId,
+                  collectionTitle: props.collectionTitle,
+                })
+              );
+            }
+      }
       className={classes.linkDisplayDiv}
     >
       <Grid container>

@@ -1,16 +1,12 @@
 import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import React from "react";
+import { useAppSelector } from "../../app/hooks";
 import AddItemComponent from "../AddItemComponent/AddItemComponent";
-import {
-  getLinksByCollection,
-  LinkItem,
-} from "../../slices/link-slice/linkSlice";
+import { LinkItem } from "../../slices/link-slice/linkSlice";
 import LinkDisplay from "../LinkDisplayComponent/LinkDisplay";
 import AddLinkModal from "../AddLinkModal/AddLinkModal";
 
 const LinkView = () => {
-  const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const [addLinkModalOpen, setAddLinkModalOpen] = React.useState(false);
   const theme = useTheme();
@@ -36,16 +32,10 @@ const LinkView = () => {
   });
   const classes = useStyles();
 
-  /*Use Effect -- ComponentWillMount */
-  useEffect(() => {
-    console.log("Print this when component is mounted");
-    dispatch(getLinksByCollection({ collectionId: "", collectionTitle: "" }));
-  }, [dispatch]);
-
   /*Get Collections From API */
-  const collectionsList = useAppSelector((state) => state.link.linkList);
+  const linkList = useAppSelector((state) => state.link.linkList);
 
-  const linkMap = collectionsList.map((item: LinkItem) => {
+  const linkMap = linkList.map((item: LinkItem) => {
     return (
       <LinkDisplay
         linkId={item.linkId}

@@ -4,7 +4,7 @@ export interface DarkModeState {
   status: boolean;
 }
 
-const initialState: DarkModeState = {
+export const initialState: DarkModeState = {
   status: false,
 };
 
