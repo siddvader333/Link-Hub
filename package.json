@@ -1,56 +1,29 @@
 {
-	"name": "link-hub",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"@material-ui/core": "^4.11.4",
-		"@material-ui/icons": "^4.11.2",
-		"@reduxjs/toolkit": "^1.5.1",
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.3.2",
-		"@testing-library/user-event": "^7.1.2",
-		"@types/jest": "^24.0.0",
-		"@types/node": "^12.0.0",
-		"@types/react": "^16.9.0",
-		"@types/react-dom": "^16.9.0",
-		"@types/react-redux": "^7.1.7",
-		"@types/react-router-dom": "^5.1.7",
-		"history": "^5.0.0",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"react-redux": "^7.2.0",
-		"react-router-dom": "^5.2.0",
-		"react-scripts": "4.0.3",
-		"redux-logger": "^3.0.6",
-		"typescript": "~4.1.5",
-		"uuid": "^8.3.2"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	},
-	"devDependencies": {
-		"@types/redux-logger": "^3.0.8",
-		"@types/uuid": "^8.3.0",
-		"autoprefixer": "^9.8.6",
-		"postcss": "^7.0.35",
-		"react-test-renderer": "^17.0.2"
-	}
+  "name": "link-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siddvader333/Link-Hub.git"
+  },
+  "keywords": [],
+  "author": "Siddharth Vijay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/siddvader333/Link-Hub/issues"
+  },
+  "homepage": "https://github.com/siddvader333/Link-Hub#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "mongoose": "^5.12.12",
+    "nodemon": "^2.0.7"
+  }
 }
