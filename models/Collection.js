@@ -7,7 +7,6 @@ const collectionSchema = new Schema({
     type: String,
     required: true,
   },
-
   collectionId: {
     type: String,
     required: true,

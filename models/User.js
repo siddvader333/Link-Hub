@@ -19,6 +19,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  refreshToken: {
+    type: String,
+  },
+  refreshExpiryDate: {
+    type: Date,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
