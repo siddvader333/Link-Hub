@@ -5,8 +5,10 @@ const User = require("./models/User");
 const graphqlSchema = require("./graphql/schema/graphqlSchema");
 const graphqlResolvers = require("./graphql/resolvers/rootResolver");
 const isAuth = require("./middleware/auth");
+const cookieParser = require("cookie-parser");
 const app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(isAuth);
 app.use(

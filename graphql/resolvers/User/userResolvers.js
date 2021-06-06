@@ -30,14 +30,11 @@ module.exports = {
       userId: uuidv4(),
     });
 
-    console.log(newUser);
-
     const res = await newUser.save();
     return { ...res._doc, password: null };
   },
   loginUser: async (args, req) => {
     const { email, password } = args;
-
     //Validate User
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -61,30 +58,51 @@ module.exports = {
 
     await user.save();
 
+    /*Set Refresh Token in HttpOnly Cookie */
+    req.res.cookie("refresh-token", refreshToken.refreshToken, {
+      expires: refreshToken.refreshExpiryDate,
+      httpOnly: true,
+    });
+
+    req.res.cookie(
+      "refresh-token-expiry",
+      refreshToken.refreshExpiryDate.toString(),
+      {
+        expires: refreshToken.refreshExpiryDate,
+        httpOnly: true,
+      }
+    );
+
     return {
       userId: user.userId,
       token: token,
       tokenExpiration: 900,
-      refreshToken: refreshToken.refreshToken,
     };
   },
+
   refreshAccessToken: async (args, req) => {
-    const { refreshToken, expiryDate } = args.RefreshToken;
+    /*Build Refresh Token from cookies */
+    const refreshToken = req.cookies["refresh-token"];
 
     if (!refreshToken || refreshToken === "") {
       throw new Error("Refresh Token not found.");
     }
 
+    const refreshExpiryDate = new Date(req.cookies["refresh-token-expiry"]);
+    const token = {
+      refreshToken: refreshToken,
+      refreshExpiryDate: refreshExpiryDate,
+    };
+
     const user = await User.findOne({
       refreshToken: refreshToken,
-      refreshExpiryDate: expiryDate,
     });
 
     if (!user) {
       throw new Error("Refresh Token not found.");
     }
 
-    const refreshValid = verifyRefreshToken(args.RefreshToken);
+    const refreshValid = verifyRefreshToken(token);
     if (!refreshValid) {
       throw new Error("Refresh Token has expired. Please Sign In again.");
     }
@@ -100,7 +118,6 @@ module.exports = {
       userId: user.userId,
       token: newAccessToken,
       tokenExpiration: 900,
-      refreshToken: refreshToken,
     };
   },
 };

@@ -9,7 +9,7 @@ module.exports = {
       throw new Error("Unauthenticated. Please login.");
     }
 
-    const { collectionTitle } = args;
+    const { collectionTitle } = args.collectionInput;
 
     /*Validate if User Id is valid */
     const users = await User.find({ userId: req.userId });
@@ -36,7 +36,6 @@ module.exports = {
 
     /*Get Collections only for current user */
     const collections = await Collection.find({ userId: req.userId });
-    console.log(collections);
     collections.forEach((collection) => {
       delete collection._id;
     });

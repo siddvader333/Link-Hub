@@ -48,16 +48,11 @@ type AuthData {
     tokenExpiration: Int!
 }
 
-input RefreshToken{
-    refreshToken: String!
-    refreshExpiryDate: String!
-}
-
 type RootQuery {
     getLinksByCollectionId(collectionId: String!): [Link!]!
-    getCollectionsByUserId(userId: String!) : [Collection!]!
+    getCollectionsByUserId : [Collection!]!
     loginUser(email: String!, password: String!): AuthData!
-    refreshAccessToken(refreshAccessTokenInput: RefreshToken): AuthData!
+    refreshAccessToken: AuthData!
 }
 
 type RootMutation {

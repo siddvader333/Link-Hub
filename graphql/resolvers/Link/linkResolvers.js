@@ -52,7 +52,6 @@ module.exports = {
     }
 
     const links = await Link.find({ collectionId: collectionId });
-    console.log(links);
     links.forEach((link) => {
       delete link._id;
     });
