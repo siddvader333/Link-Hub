@@ -79,7 +79,35 @@ module.exports = {
       tokenExpiration: 900,
     };
   },
+  signOut: async (args, req) => {
+    /*Validate Authentication */
+    if (!req.isAuth) {
+      throw new Error("Unauthenticated. Please login.");
+    }
 
+    /*Remove Refresh Token from cookies*/
+    req.res.cookie("refresh-token", {
+      expires: Date.now(),
+      httpOnly: true,
+    });
+    req.res.cookie("refresh-token-expiry", {
+      expires: Date.now(),
+      httpOnly: true,
+    });
+
+    /*Remove Refresh Token from database */
+    const user = User.findOne({ userId: req.userId });
+
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    delete user.refreshToken;
+    delete user.refreshExpiryDate;
+
+    await user.save();
+    return;
+  },
   refreshAccessToken: async (args, req) => {
     /*Build Refresh Token from cookies */
     const refreshToken = req.cookies["refresh-token"];

@@ -52,6 +52,7 @@ type RootQuery {
     getLinksByCollectionId(collectionId: String!): [Link!]!
     getCollectionsByUserId : [Collection!]!
     loginUser(email: String!, password: String!): AuthData!
+    signOut: String
     refreshAccessToken: AuthData!
 }
 
