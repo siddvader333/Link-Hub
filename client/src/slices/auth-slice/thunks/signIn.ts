@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  AuthData,
   requestAuthFailure,
   sendAuthRequest,
   signInSuccess,
 } from "../authSlice";
+import refreshToken from "./refreshToken";
 
 export interface signInProps {
   email: String | undefined;
@@ -16,11 +16,7 @@ const signIn = createAsyncThunk(
     const { email, password } = args;
     const dispatch = thunkAPI.dispatch;
     dispatch(sendAuthRequest());
-    let data: AuthData = {
-      token: undefined,
-      tokenExpiration: undefined,
-      userId: undefined,
-    };
+    let data: { token: any; tokenExpiration: number; userId: any };
 
     try {
       //Make API call to sign in user given credentials
@@ -34,23 +30,25 @@ const signIn = createAsyncThunk(
         }`,
       };
 
-      console.log(email);
-      console.log(password);
       let res = await fetch("http://localhost:5000/graphql", {
         method: "POST",
         body: JSON.stringify(requestBody),
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       const resJson = await res.json();
+      console.log(resJson);
+
       if (resJson.errors !== undefined) {
         throw new Error(resJson.errors[0].message);
       }
       data = resJson.data.loginUser;
     } catch (error) {
       console.log("Sign In Error");
-      dispatch(requestAuthFailure(error));
+      dispatch(requestAuthFailure(error.toString()));
       return;
     }
 
@@ -61,6 +59,13 @@ const signIn = createAsyncThunk(
         userId: data.userId,
       })
     );
+
+    //dispatch action to set timer
+    //await dispatch(refreshToken());
+
+    setInterval(async () => {
+      await dispatch(refreshToken());
+    }, data.tokenExpiration * 1000);
   }
 );
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { mockGetCollections } from "../../../mocks/apiMocks";
+//import makeApiRequestWithAuthRefresh from "../../../utils/apiCallHelper";
 import {
   hydrateCollectionList,
   requestCollectionFailure,
@@ -14,19 +14,35 @@ const getCollections = createAsyncThunk(
     dispatch(sendCollectionRequest());
     try {
       //Make API Call to get link Collection from collectionId
-      collectionList = mockGetCollections();
+      /*const requestBody = {
+        query: `query {
+          getCollectionsByUserId{
+            collectionId
+            collectionTitle
+          }
+        }`,
+      };
+*/
+      /*let res = await makeApiRequestWithAuthRefresh({
+        method: "POST",
+        body: JSON.stringify(requestBody),
+      });*/
+      // const resJson = await res.json();
+      //if (resJson.errors !== undefined) {
+      // throw new Error(resJson.errors[0].message);
+      //}
+      //collectionList = resJson.data.getCollectionsByUserId;
     } catch (error) {
       console.log("Get Collection Error");
       dispatch(requestCollectionFailure("Unable to get Collections"));
       return;
-    } finally {
-      /*Request Succeeded -- add collections to state */
-      dispatch(
-        hydrateCollectionList({
-          collectionList: collectionList,
-        })
-      );
     }
+    /*Request Succeeded -- add collections to state */
+    dispatch(
+      hydrateCollectionList({
+        collectionList: collectionList,
+      })
+    );
   }
 );
 

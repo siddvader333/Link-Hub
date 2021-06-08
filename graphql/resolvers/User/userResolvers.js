@@ -33,8 +33,10 @@ module.exports = {
     const res = await newUser.save();
     return { ...res._doc, password: null };
   },
-  loginUser: async (args, req) => {
+  loginUser: async (args, context) => {
+    const { req, res } = context;
     const { email, password } = args;
+
     //Validate User
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -59,17 +61,19 @@ module.exports = {
     await user.save();
 
     /*Set Refresh Token in HttpOnly Cookie */
-    req.res.cookie("refresh-token", refreshToken.refreshToken, {
+    res.cookie("refresh-token", refreshToken.refreshToken, {
       expires: refreshToken.refreshExpiryDate,
       httpOnly: true,
+      secure: false,
     });
 
-    req.res.cookie(
+    res.cookie(
       "refresh-token-expiry",
       refreshToken.refreshExpiryDate.toString(),
       {
         expires: refreshToken.refreshExpiryDate,
         httpOnly: true,
+        secure: false,
       }
     );
 
@@ -108,10 +112,10 @@ module.exports = {
     await user.save();
     return;
   },
-  refreshAccessToken: async (args, req) => {
+  refreshAccessToken: async (args, context) => {
     /*Build Refresh Token from cookies */
+    const { req } = context;
     const refreshToken = req.cookies["refresh-token"];
-
     if (!refreshToken || refreshToken === "") {
       throw new Error("Refresh Token not found.");
     }
@@ -121,7 +125,6 @@ module.exports = {
       refreshToken: refreshToken,
       refreshExpiryDate: refreshExpiryDate,
     };
-
     const user = await User.findOne({
       refreshToken: refreshToken,
     });

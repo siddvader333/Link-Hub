@@ -6,27 +6,41 @@ const graphqlSchema = require("./graphql/schema/graphqlSchema");
 const graphqlResolvers = require("./graphql/resolvers/rootResolver");
 const isAuth = require("./middleware/auth");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
+
 app.use(isAuth);
+/*
+app.get("/test", (req, res) => {
+  console.log("test");
+  res.cookie("test", 5, {
+    expiresIn: 900,
+    httpOnly: false,
+  });
+  res.send();
+});
+*/
 app.use(
   "/graphql",
-  graphqlHTTP({
-    /*Configure Graphql API */
-    schema: graphqlSchema,
-    rootValue: graphqlResolvers,
-    graphiql: true,
+  graphqlHTTP((req, res) => {
+    return {
+      /*Configure Graphql API */
+
+      schema: graphqlSchema,
+      rootValue: graphqlResolvers,
+      graphiql: true,
+      context: { req: req, res: res, test: "sup" },
+    };
   })
 );
 
