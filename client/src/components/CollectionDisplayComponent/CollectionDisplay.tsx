@@ -5,17 +5,19 @@ import EditIcon from "@material-ui/icons/Edit";
 import EditCollectionModal from "../EditCollectionModal/EditCollectionModal";
 import StyledButton from "../common/StyledButton";
 import getLinksByCollection from "../../slices/link-slice/thunks/getLinksByCollection";
+import history from "../../utils/history";
 
-export interface LinkCollectionProps {
+export interface CollectionDisplayProps {
   collectionTitle: string | undefined;
   collectionId: string | undefined;
 }
 
-const LinkCollection = (props: LinkCollectionProps) => {
+const CollectionDisplay = (props: CollectionDisplayProps) => {
   const [editCollectionModalOpen, setEditCollectionModalOpen] =
     React.useState(false);
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
   const useStyles = makeStyles({
     linkDisplayDiv: {
       borderRadius: "25px",
@@ -71,8 +73,10 @@ const LinkCollection = (props: LinkCollectionProps) => {
                 getLinksByCollection({
                   collectionId: props.collectionId,
                   collectionTitle: props.collectionTitle,
+                  accessToken: accessToken,
                 })
               );
+              history.push("/dashboard/links");
             }
       }
       className={classes.linkDisplayDiv}
@@ -114,4 +118,4 @@ const LinkCollection = (props: LinkCollectionProps) => {
   );
 };
 
-export default LinkCollection;
+export default CollectionDisplay;

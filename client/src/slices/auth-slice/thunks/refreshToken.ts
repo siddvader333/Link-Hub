@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { useAppSelector } from "../../../app/hooks";
 import {
   refreshAccessTokenSuccess,
   requestAuthFailure,
@@ -36,14 +35,11 @@ const refreshToken = createAsyncThunk(
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          //Authorization: "Bearer " + accessToken,
         },
       });
 
       const resJson = await res.json();
-      //console.log(resJson);
       if (resJson.errors !== undefined) {
-        console.log("errorrrrr");
         throw new Error(resJson.errors[0].message);
       }
       refreshAccessToken = resJson.data.refreshAccessToken;
@@ -53,7 +49,6 @@ const refreshToken = createAsyncThunk(
       return;
     }
 
-    //console.log(refreshAccessToken);
     dispatch(
       refreshAccessTokenSuccess({
         token: refreshAccessToken.token,

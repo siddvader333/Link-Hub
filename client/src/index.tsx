@@ -7,12 +7,13 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import CustomThemeProvider from "./themes/CustomThemeProvider";
 import { CssBaseline } from "@material-ui/core";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
+import history from "./utils/history";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <CustomThemeProvider>
           <CssBaseline />
           <App />

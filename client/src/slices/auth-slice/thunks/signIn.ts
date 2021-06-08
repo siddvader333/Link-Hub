@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import history from "../../../utils/history";
 import {
   requestAuthFailure,
   sendAuthRequest,
@@ -7,8 +8,8 @@ import {
 import refreshToken from "./refreshToken";
 
 export interface signInProps {
-  email: String | undefined;
-  password: String | undefined;
+  email: string | undefined;
+  password: string | undefined;
 }
 const signIn = createAsyncThunk(
   "/auth/signIn",
@@ -60,12 +61,11 @@ const signIn = createAsyncThunk(
       })
     );
 
-    //dispatch action to set timer
-    //await dispatch(refreshToken());
-
     setInterval(async () => {
       await dispatch(refreshToken());
     }, data.tokenExpiration * 1000);
+
+    history.push("/dashboard/collections");
   }
 );
 

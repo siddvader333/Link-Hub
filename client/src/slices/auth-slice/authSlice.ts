@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface AuthData {
-  token: String | undefined;
+  token: string | undefined;
   tokenExpiration: string | undefined;
   userId: string | undefined;
 }
@@ -9,7 +9,7 @@ export interface AuthState {
   isAuthed: boolean;
   authData: AuthData;
   loading: boolean;
-  errorMessage: String | undefined;
+  errorMessage: string | undefined;
 }
 
 export const initialState: AuthState = {

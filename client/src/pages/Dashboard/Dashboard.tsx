@@ -1,14 +1,15 @@
 import { makeStyles, useTheme } from "@material-ui/core";
 import React from "react";
+import { Route, Switch } from "react-router";
 import { useAppSelector } from "../../app/hooks";
 import CollectionView from "../../components/CollectionView/CollectionView";
 import LinkView from "../../components/LinkView/LinkView";
 
 const Dashboard = () => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
-  const collectionSelected = useAppSelector(
+  /*const collectionSelected = useAppSelector(
     (state) => state.link.selectedCollectionId !== undefined
-  );
+  );*/
 
   const theme = useTheme();
   const useStyles = makeStyles({
@@ -36,7 +37,10 @@ const Dashboard = () => {
   /*Get Links From API */
   return (
     <div className={classes.displayDiv}>
-      {!collectionSelected ? <CollectionView /> : <LinkView />}
+      <Switch>
+        <Route exact path="/dashboard/links" component={LinkView} />
+        <Route component={CollectionView} />
+      </Switch>
     </div>
   );
 };

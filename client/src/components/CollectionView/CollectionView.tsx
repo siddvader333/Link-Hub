@@ -3,15 +3,27 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { CollectionItem } from "../../slices/collection-slice/collectionSlice";
 import AddItemComponent from "../AddItemComponent/AddItemComponent";
-import LinkCollection from "../LinkCollectionComponent/LinkCollection";
 import AddCollectionModal from "../AddCollectionModal/AddCollectionModal";
 import getCollections from "../../slices/collection-slice/thunks/getCollections";
+import CollectionDisplay from "../CollectionDisplayComponent/CollectionDisplay";
 
 const CollectionView = () => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
+  /*Get Collections From API */
+  const collectionsList = useAppSelector(
+    (state) => state.collection.collectionList
+  );
   const [addCollectionModalOpen, setAddCollectionModalOpen] =
     React.useState(false);
+
+  /*Use Effect -- ComponentWillMount */
+  useEffect(() => {
+    console.log("Print this when component is mounted");
+    dispatch(getCollections({ token: accessToken }));
+  }, [dispatch, accessToken]);
+
   const theme = useTheme();
   const useStyles = makeStyles({
     displayDiv: {
@@ -34,20 +46,11 @@ const CollectionView = () => {
     },
   });
   const classes = useStyles();
-  /*Use Effect -- ComponentWillMount */
-  useEffect(() => {
-    console.log("Print this when component is mounted");
-    dispatch(getCollections());
-  }, [dispatch]);
-
-  /*Get Collections From API */
-  const collectionsList = useAppSelector(
-    (state) => state.collection.collectionList
-  );
 
   const collectionMap = collectionsList.map((item: CollectionItem) => {
     return (
-      <LinkCollection
+      <CollectionDisplay
+        key={item.collectionId}
         collectionId={item.collectionId}
         collectionTitle={item.collectionTitle}
       />

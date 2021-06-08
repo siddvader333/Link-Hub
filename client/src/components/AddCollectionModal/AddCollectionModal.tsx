@@ -20,6 +20,7 @@ export interface AddCollectionModalProps {
 const AddCollectionModal = (props: AddCollectionModalProps) => {
   const [newCollectionTitle, setNewCollectionTitle] = React.useState("");
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const useStyles = makeStyles({
@@ -88,6 +89,7 @@ const AddCollectionModal = (props: AddCollectionModalProps) => {
                 dispatch(
                   addCollection({
                     collectionTitle: newCollectionTitle,
+                    accessToken: accessToken,
                   })
                 );
                 props.handleClose();

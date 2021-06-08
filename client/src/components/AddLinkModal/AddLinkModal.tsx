@@ -21,6 +21,10 @@ const AddLinkModal = (props: AddLinkModalProps) => {
   const [newLinkTitle, setNewLinkTitle] = React.useState("");
   const [newLinkUrl, setNewLinkUrl] = React.useState("");
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
+  const collectionId = useAppSelector(
+    (state) => state.link.selectedCollectionId
+  );
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const useStyles = makeStyles({
@@ -93,7 +97,12 @@ const AddLinkModal = (props: AddLinkModalProps) => {
             <StyledButton
               onClick={() => {
                 dispatch(
-                  addLink({ linkTitle: newLinkTitle, linkUrl: newLinkUrl })
+                  addLink({
+                    linkTitle: newLinkTitle,
+                    linkUrl: newLinkUrl,
+                    accessToken: accessToken,
+                    collectionId: collectionId,
+                  })
                 );
                 props.handleClose();
               }}
