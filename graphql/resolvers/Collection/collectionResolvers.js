@@ -3,7 +3,8 @@ const uuidv4 = require("uuid").v4;
 const User = require("../../../models/User");
 
 module.exports = {
-  createCollection: async (args, req) => {
+  createCollection: async (args, context) => {
+    const { req } = context;
     /*Validate Authentication */
     if (!req.isAuth) {
       throw new Error("Unauthenticated. Please login.");
@@ -28,8 +29,10 @@ module.exports = {
     return res;
   },
 
-  getCollectionsByUserId: async (args, req) => {
+  getCollectionsByUserId: async (args, context) => {
     /*Validate Authentication */
+    const { req } = context;
+    //console.log(req.isAuth);
     if (!req.isAuth) {
       throw new Error("Unauthenticated. Please login.");
     }
@@ -41,5 +44,25 @@ module.exports = {
     });
 
     return collections;
+  },
+  editCollection: async (args, context) => {
+    const { req } = context;
+    const { collectionId, collectionTitle } = args;
+
+    /*Validate authentication */
+    if (!req.isAuth) {
+      throw new Error("Unauthenticated. Please login.");
+    }
+
+    const collection = await Collection.findOne({ collectionId: collectionId });
+    if (!collection) {
+      throw new Error("No existing user with the given userId.");
+    }
+    console.log(collection);
+    collection.collectionTitle = collectionTitle;
+    await collection.save();
+
+    delete collection._id;
+    return collection;
   },
 };

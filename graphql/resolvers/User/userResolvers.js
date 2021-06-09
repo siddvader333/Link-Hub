@@ -83,7 +83,8 @@ module.exports = {
       tokenExpiration: 900,
     };
   },
-  signOut: async (args, req) => {
+  signOut: async (args, context) => {
+    const { req } = context;
     /*Validate Authentication */
     if (!req.isAuth) {
       throw new Error("Unauthenticated. Please login.");

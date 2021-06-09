@@ -1,10 +1,11 @@
-import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
+import { Box, Link, makeStyles, Typography, useTheme } from "@material-ui/core";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import AddItemComponent from "../AddItemComponent/AddItemComponent";
 import { LinkItem } from "../../slices/link-slice/linkSlice";
 import LinkDisplay from "../LinkDisplayComponent/LinkDisplay";
 import AddLinkModal from "../AddLinkModal/AddLinkModal";
+import history from "../../utils/history";
 
 const LinkView = () => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
@@ -15,7 +16,7 @@ const LinkView = () => {
       width: "60%",
       marginLeft: "20%",
       marginRight: "20%",
-      marginTop: "10vh",
+      marginTop: "2.5vh",
       height: "70vh",
       overflowY: "auto",
       [theme.breakpoints.down("sm")]: {
@@ -28,6 +29,17 @@ const LinkView = () => {
       color: darkMode ? "#aad8d3" : "#3bba9c",
       marginBottom: "10px",
       textAlign: "center",
+    },
+    returnLink: {
+      fontSize: "20px",
+      color: darkMode ? "#aad8d3" : "#3bba9c",
+      "&:hover": {
+        cursor: "pointer",
+      },
+    },
+    returnLinkDiv: {
+      marginLeft: "10%",
+      marginTop: "2.5vh",
     },
   });
   const classes = useStyles();
@@ -49,24 +61,36 @@ const LinkView = () => {
   });
 
   return (
-    <>
+    <div>
+      <div className={classes.returnLinkDiv}>
+        <Link
+          onClick={() => {
+            history.push("/dashboard");
+          }}
+          className={classes.returnLink}
+        >
+          <Box fontWeight={200}>Back to Collections</Box>
+        </Link>
+      </div>
       <Typography className={classes.title}>
         <Box fontWeight={200}>Links</Box>
       </Typography>
-      <AddItemComponent
-        onClick={() => {
-          setAddLinkModalOpen(true);
-        }}
-        text={"+ Add New Link "}
-      />
-      <AddLinkModal
-        modalOpen={addLinkModalOpen}
-        handleClose={() => {
-          setAddLinkModalOpen(false);
-        }}
-      />
-      {linkMap}
-    </>
+      <div className={classes.displayDiv}>
+        <AddItemComponent
+          onClick={() => {
+            setAddLinkModalOpen(true);
+          }}
+          text={"+ Add New Link "}
+        />
+        <AddLinkModal
+          modalOpen={addLinkModalOpen}
+          handleClose={() => {
+            setAddLinkModalOpen(false);
+          }}
+        />
+        {linkMap}
+      </div>
+    </div>
   );
 };
 

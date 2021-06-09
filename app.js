@@ -20,16 +20,6 @@ app.use(
 );
 
 app.use(isAuth);
-/*
-app.get("/test", (req, res) => {
-  console.log("test");
-  res.cookie("test", 5, {
-    expiresIn: 900,
-    httpOnly: false,
-  });
-  res.send();
-});
-*/
 app.use(
   "/graphql",
   graphqlHTTP((req, res) => {

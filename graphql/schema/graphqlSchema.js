@@ -60,6 +60,8 @@ type RootMutation {
     createCollection(collectionInput: CollectionInput): Collection
     createLink(linkInput: LinkInput) : Link
     createUser(userInput: UserInput) : User
+    editLink(linkId: String!, linkTitle: String!, linkUrl:String!) : Link!
+    editCollection(collectionId: String!, collectionTitle: String!) :Collection!
 }
 
 schema {

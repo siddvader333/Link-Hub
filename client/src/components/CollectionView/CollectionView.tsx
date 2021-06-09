@@ -30,7 +30,7 @@ const CollectionView = () => {
       width: "60%",
       marginLeft: "20%",
       marginRight: "20%",
-      marginTop: "10vh",
+      marginTop: "2.5vh",
       height: "70vh",
       overflowY: "auto",
       [theme.breakpoints.down("sm")]: {
@@ -43,6 +43,7 @@ const CollectionView = () => {
       color: darkMode ? "#aad8d3" : "#3bba9c",
       marginBottom: "10px",
       textAlign: "center",
+      marginTop: "2.5vh",
     },
   });
   const classes = useStyles();
@@ -62,19 +63,21 @@ const CollectionView = () => {
       <Typography className={classes.title}>
         <Box fontWeight={200}>Collections</Box>
       </Typography>
-      <AddItemComponent
-        onClick={() => {
-          setAddCollectionModalOpen(true);
-        }}
-        text={"+ Add New Link Collection"}
-      />
-      <AddCollectionModal
-        modalOpen={addCollectionModalOpen}
-        handleClose={() => {
-          setAddCollectionModalOpen(false);
-        }}
-      />
-      {collectionMap}
+      <div className={classes.displayDiv}>
+        <AddItemComponent
+          onClick={() => {
+            setAddCollectionModalOpen(true);
+          }}
+          text={"+ Add New Link Collection"}
+        />
+        <AddCollectionModal
+          modalOpen={addCollectionModalOpen}
+          handleClose={() => {
+            setAddCollectionModalOpen(false);
+          }}
+        />
+        {collectionMap}
+      </div>
     </>
   );
 };

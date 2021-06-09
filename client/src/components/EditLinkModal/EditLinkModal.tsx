@@ -20,6 +20,7 @@ export interface EditLinkModalProps {
 
 const EditLinkModal = (props: EditLinkModalProps) => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
   const [newLinkTitle, setNewLinkTitle] = React.useState("");
   const [newLinkUrl, setNewLinkUrl] = React.useState("");
   const dispatch = useAppDispatch();
@@ -98,6 +99,7 @@ const EditLinkModal = (props: EditLinkModalProps) => {
                     linkId: props.linkId,
                     linkTitle: newLinkTitle,
                     linkUrl: newLinkUrl,
+                    accessToken: accessToken,
                   })
                 );
                 props.handleClose();

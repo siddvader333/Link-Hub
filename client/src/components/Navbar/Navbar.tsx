@@ -12,9 +12,11 @@ import DarkModeIcon from "@material-ui/icons/Brightness2";
 import { darkModeToggle } from "../../slices/darkmode-slice/darkModeSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useLocation } from "react-router";
+import signOut from "../../slices/auth-slice/thunks/signOut";
 
 const NavBar = () => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
   const dispatch = useAppDispatch();
   const onToggleDarkMode = () => {
     dispatch(darkModeToggle());
@@ -59,7 +61,12 @@ const NavBar = () => {
             <Typography className={classes.title}>
               <Box fontWeight={200}>Link Hub</Box>
             </Typography>
-            <Link href="/" className={classes.navLink}>
+            <Link
+              onClick={() => {
+                dispatch(signOut({ accessToken: accessToken }));
+              }}
+              className={classes.navLink}
+            >
               <Box fontWeight={200}>Sign Out</Box>
             </Link>
           </>

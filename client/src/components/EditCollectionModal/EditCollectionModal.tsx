@@ -21,6 +21,7 @@ export interface EditCollectionModalProps {
 const EditCollectionModal = (props: EditCollectionModalProps) => {
   const [newCollectionTitle, setNewCollectionTitle] = React.useState("");
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const accessToken = useAppSelector((state) => state.auth.authData.token);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const useStyles = makeStyles({
@@ -90,6 +91,7 @@ const EditCollectionModal = (props: EditCollectionModalProps) => {
                   editCollections({
                     collectionId: props.collectionId,
                     collectionTitle: newCollectionTitle,
+                    accessToken: accessToken,
                   })
                 );
                 props.handleClose();

@@ -1,9 +1,18 @@
 import { Box, makeStyles, Typography, useTheme } from "@material-ui/core";
-import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AuthComponent from "../../components/AuthComponent/AuthComponent";
+import silentSignIn from "../../slices/auth-slice/thunks/silentSignIn";
 const HomePage = () => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
+
+  /*Use Effect -- ComponentWillMount */
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    console.log("Print this when component is mounted");
+    dispatch(silentSignIn());
+  }, [dispatch]);
+
   const theme = useTheme();
   const useStyles = makeStyles({
     authDiv: {
