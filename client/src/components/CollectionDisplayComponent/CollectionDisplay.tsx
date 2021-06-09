@@ -6,6 +6,7 @@ import EditCollectionModal from "../EditCollectionModal/EditCollectionModal";
 import StyledButton from "../common/StyledButton";
 import getLinksByCollection from "../../slices/link-slice/thunks/getLinksByCollection";
 import history from "../../utils/history";
+import openCollection from "../../slices/collection-slice/thunks/openCollection";
 
 export interface CollectionDisplayProps {
   collectionTitle: string | undefined;
@@ -18,6 +19,7 @@ const CollectionDisplay = (props: CollectionDisplayProps) => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.darkMode.status);
   const accessToken = useAppSelector((state) => state.auth.authData.token);
+  const linkList = useAppSelector((state) => state.link.linkList);
   const useStyles = makeStyles({
     linkDisplayDiv: {
       borderRadius: "25px",
@@ -102,7 +104,19 @@ const CollectionDisplay = (props: CollectionDisplayProps) => {
         </Grid>
         <Grid item xs={12} sm={5}>
           <div className={classes.buttonDiv}>
-            <StyledButton text="Open All" />
+            <StyledButton
+              onClick={() => {
+                dispatch(
+                  getLinksByCollection({
+                    collectionId: props.collectionId,
+                    collectionTitle: props.collectionTitle,
+                    accessToken: accessToken,
+                  })
+                );
+                dispatch(openCollection({ linkList: linkList }));
+              }}
+              text="Open All"
+            />
           </div>
         </Grid>
       </Grid>

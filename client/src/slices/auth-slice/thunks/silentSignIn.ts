@@ -46,7 +46,9 @@ const silentSignIn = createAsyncThunk(
       refreshAccessToken = resJson.data.refreshAccessToken;
     } catch (error) {
       console.log("Error on Silent Sign In.");
-      dispatch(requestAuthFailure(error.toString()));
+      dispatch(
+        requestAuthFailure("Error on Silent Sign In. Please Sign In Below.")
+      );
       return;
     }
 

@@ -49,7 +49,9 @@ export const editLink = createAsyncThunk(
       }
     } catch (error) {
       console.log("Edit Link Error");
-      dispatch(requestLinkFailure("Unable to Edit Link."));
+      dispatch(
+        requestLinkFailure("Unable to edit link. Please try again later.")
+      );
       return;
     }
     dispatch(

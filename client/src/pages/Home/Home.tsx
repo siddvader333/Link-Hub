@@ -7,11 +7,11 @@ const HomePage = () => {
   const darkMode = useAppSelector((state) => state.darkMode.status);
 
   /*Use Effect -- ComponentWillMount */
-  const dispatch = useAppDispatch();
+  /*const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("Print this when component is mounted");
     dispatch(silentSignIn());
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   const theme = useTheme();
   const useStyles = makeStyles({

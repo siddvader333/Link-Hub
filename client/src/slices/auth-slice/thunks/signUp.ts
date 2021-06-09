@@ -44,7 +44,7 @@ const signUp = createAsyncThunk(
       data = resJson.data.loginUser;
     } catch (error) {
       console.log("Sign Up Error");
-      dispatch(requestAuthFailure("Unable to Sign Up."));
+      dispatch(requestAuthFailure("Sign Up Error"));
       return;
     }
   }

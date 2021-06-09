@@ -53,7 +53,9 @@ export const addLink = createAsyncThunk(
       newLinkId = resJson.data.createLink.linkId;
     } catch (error) {
       console.log("Add Link Error");
-      dispatch(requestLinkFailure("Unable to Add a new link."));
+      dispatch(
+        requestLinkFailure("Unable to add link. Please try again later.")
+      );
       return;
     }
     dispatch(

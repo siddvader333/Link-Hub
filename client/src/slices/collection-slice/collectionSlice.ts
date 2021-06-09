@@ -49,7 +49,10 @@ export const collectionSlice = createSlice({
     },
     requestCollectionFailure: (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.errorMessage = action.payload;
+    },
+    clearCollectionError: (state) => {
+      state.errorMessage = undefined;
     },
   },
 });
@@ -60,6 +63,7 @@ export const {
   addCollectionSuccess,
   hydrateCollectionList,
   requestCollectionFailure,
+  clearCollectionError,
 } = collectionSlice.actions;
 
 const collectionReducer = collectionSlice.reducer;

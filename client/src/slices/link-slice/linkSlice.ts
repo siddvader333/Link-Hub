@@ -59,7 +59,10 @@ export const linkSlice = createSlice({
     },
     requestLinkFailure: (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.errorMessage = action.payload;
+    },
+    clearLinkError: (state) => {
+      state.errorMessage = undefined;
     },
   },
 });
@@ -70,6 +73,7 @@ export const {
   addLinkSuccess,
   getLinksByCollectionSuccess,
   requestLinkFailure,
+  clearLinkError,
 } = linkSlice.actions;
 
 const linkReducer = linkSlice.reducer;

@@ -45,7 +45,11 @@ const addCollection = createAsyncThunk(
       newCollectionId = resJson.data.createCollection.collectionId;
     } catch (error) {
       console.log("Add Collection Error");
-      dispatch(requestCollectionFailure("Unable to add new collection."));
+      dispatch(
+        requestCollectionFailure(
+          "Unable to add collection. Please try again later."
+        )
+      );
       return;
     }
     dispatch(

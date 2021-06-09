@@ -1,9 +1,10 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import EditIcon from "@material-ui/icons/Edit";
 import EditLinkModal from "../EditLinkModal/EditLinkModal";
 import StyledButton from "../common/StyledButton";
+import openLink from "../../slices/link-slice/thunks/openLink";
 
 export interface LinkDisplayProps {
   linkUrl: string | undefined;
@@ -15,6 +16,7 @@ export interface LinkDisplayProps {
 const LinkDisplay = (props: LinkDisplayProps) => {
   const [editLinkModalOpen, setEditLinkModalOpen] = React.useState(false);
   const darkMode = useAppSelector((state) => state.darkMode.status);
+  const dispatch = useAppDispatch();
   const useStyles = makeStyles({
     linkDisplayDiv: {
       borderRadius: "25px",
@@ -90,7 +92,12 @@ const LinkDisplay = (props: LinkDisplayProps) => {
         </Grid>
         <Grid item xs={12} sm={5}>
           <div className={classes.buttonDiv}>
-            <StyledButton text="Open" />
+            <StyledButton
+              onClick={() => {
+                dispatch(openLink({ linkUrl: props.linkUrl }));
+              }}
+              text="Open"
+            />
           </div>
         </Grid>
       </Grid>

@@ -49,7 +49,7 @@ const signIn = createAsyncThunk(
       data = resJson.data.loginUser;
     } catch (error) {
       console.log("Sign In Error");
-      dispatch(requestAuthFailure(error.toString()));
+      dispatch(requestAuthFailure("Sign In Error."));
       return;
     }
 

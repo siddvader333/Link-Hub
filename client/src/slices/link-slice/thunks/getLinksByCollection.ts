@@ -50,7 +50,9 @@ export const getLinksByCollection = createAsyncThunk(
       linkList = resJson.data.getLinksByCollectionId;
     } catch (error) {
       console.log("Get Links By Collection Id Error");
-      dispatch(requestLinkFailure("Unable to get links by collection Id"));
+      dispatch(
+        requestLinkFailure("Unable to get link. Please try again later.")
+      );
       return;
     }
     dispatch(

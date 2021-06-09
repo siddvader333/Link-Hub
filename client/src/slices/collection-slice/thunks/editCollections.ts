@@ -47,7 +47,11 @@ const editCollections = createAsyncThunk(
       }
     } catch (error) {
       console.log("Edit Collection Error");
-      dispatch(requestCollectionFailure("Unable to Edit Collections."));
+      dispatch(
+        requestCollectionFailure(
+          "Unable to edit collection. Please try again later."
+        )
+      );
       return;
     }
     //Request Succeeded --> edit local store

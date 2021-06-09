@@ -101,16 +101,18 @@ module.exports = {
     });
 
     /*Remove Refresh Token from database */
-    const user = User.findOne({ userId: req.userId });
+    const user = User.findOneAndUpdate(
+      { userId: req.userId },
+      {
+        refreshToken: "",
+        refreshTokenExpiry: "",
+      },
+      { new: true }
+    );
 
     if (!user) {
       throw new Error("User not found.");
     }
-
-    delete user.refreshToken;
-    delete user.refreshExpiryDate;
-
-    await user.save();
     return;
   },
   refreshAccessToken: async (args, context) => {

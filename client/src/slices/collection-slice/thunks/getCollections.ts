@@ -41,7 +41,11 @@ const getCollections = createAsyncThunk(
       collectionList = resJson.data.getCollectionsByUserId;
     } catch (error) {
       console.log("Get Collection Error");
-      dispatch(requestCollectionFailure(error.toString()));
+      dispatch(
+        requestCollectionFailure(
+          "Unable to get collections. Please try again later."
+        )
+      );
       return;
     }
     /*Request Succeeded -- add collections to state */

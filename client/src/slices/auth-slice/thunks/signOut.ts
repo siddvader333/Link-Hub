@@ -37,7 +37,7 @@ const signOut = createAsyncThunk(
       }
     } catch (error) {
       console.log("Sign Out Error.");
-      dispatch(requestAuthFailure("Unable to Sign Out"));
+      dispatch(requestAuthFailure("Sign Out Error."));
     }
     dispatch(signOutSuccess());
     history.push("/");

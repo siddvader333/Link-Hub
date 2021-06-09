@@ -62,7 +62,10 @@ export const authSlice = createSlice({
     },
     requestAuthFailure: (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.errorMessage = action.payload;
+    },
+    clearAuthError: (state) => {
+      state.errorMessage = undefined;
     },
   },
 });
@@ -73,6 +76,7 @@ export const {
   signOutSuccess,
   requestAuthFailure,
   refreshAccessTokenSuccess,
+  clearAuthError,
 } = authSlice.actions;
 const authReducer = authSlice.reducer;
 

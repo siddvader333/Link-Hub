@@ -45,7 +45,7 @@ const refreshToken = createAsyncThunk(
       refreshAccessToken = resJson.data.refreshAccessToken;
     } catch (error) {
       console.log("Error Refreshing Access Token");
-      dispatch(requestAuthFailure(error.toString()));
+      dispatch(requestAuthFailure("Error Refreshing Access Token."));
       return;
     }
 
